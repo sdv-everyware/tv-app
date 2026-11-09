@@ -1,0 +1,6 @@
+# the backups fig-to-dcf.sh keeps of older documents
+data/*.dcf.*
+.vscode/
+
+# design/build.sh output: built again from the patches, opened in Figma from here
+design/build/
