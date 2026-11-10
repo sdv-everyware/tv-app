@@ -36,9 +36,10 @@ what a designer opens. The plain path, no agent and no tools:
    The layer names starting with `#` are the contract with the code (`src/ui_model.rs`): keep
    them; a new element the app should drive gets a `#tv/<name>` of its own, and the app a
    field with that name.
-3. **Hand it over**: share the Figma file. The developer fetches it into the app once with
-   `scripts/fetch-dcf.sh data/tv.dcf <file key>` (the key is in the file's URL), and the
-   board shows it.
+3. **Hand it over**: share the Figma file. The developer fetches it into the app once, from
+   the tree's top, with a Figma token exported in the shell (never written down):
+   `FIGMA_TOKEN=... vendor/sdv-everyware/everyware/scripts/fetch-dcf.sh packages/services/display_safety/utils/tv-app/data/tv.dcf <file key>`
+   (the key is in the file's URL, `figma.com/design/<key>/...`), and the board shows it.
 
 What the scripts add on top is only the other direction: `design/build.sh` writes this `.fig`
 from `design/tv-patch.js` (an agent's or a developer's drawing in code) and the Library, and
