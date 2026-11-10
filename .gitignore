@@ -2,5 +2,5 @@
 data/*.dcf.*
 .vscode/
 
-# design/build.sh output: built again from the patches, opened in Figma from here
+# design/build.sh intermediates (the Library, the light theme); the result design/<app>.fig is in git
 design/build/

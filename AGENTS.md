@@ -11,7 +11,7 @@ repositories, every skill, the rules for every change) is
 |---|---|
 | `design/tv-patch.js` | the screen: Library components in slots under `#tv-root`, named `#tv/...` |
 | `design/weather-pictures.js` | the app's own pictures of the weather, the set `#tv-weather` |
-| `design/build.sh` | builds the design: `design/build/tv.fig` and `data/tv.dcf` |
+| `design/build.sh` | builds the design: `design/tv.fig` and `data/tv.dcf` |
 | `data/tv.dcf` | the design the app loads; committed |
 | `src/ui_model.rs` | the names of the design the code writes to or taps |
 | `src/state.rs, actions.rs, presenter.rs` | the state, what a gesture or the data changes, the state to the screen |
@@ -36,7 +36,7 @@ repositories, every skill, the rules for every change) is
 ## Commands
 
 ```bash
-# the design: the Library, this app's .fig (design/build/, not in git) and data/tv.dcf
+# the design: the Library, this app's .fig (design/, in git: what a designer opens) and data/tv.dcf
 packages/services/display_safety/utils/tv-app/design/build.sh
 # the app, for the RB3 (from the tree's top)
 bash -c 'source device/rb3/sdv_media_db845c/tools/env.sh >/dev/null 2>&1; m tv_app'
