@@ -4,13 +4,14 @@
 use crate::clock::Clock;
 use everyware_dashboard_grpc::weather::Weather;
 use everyware_ui::button::{Icon, IconButton, IconButtonKind};
+use everyware_ui::design::Sizes;
 use everyware_ui::list_view::ListView;
 use everyware_ui::segmented::Segmented;
-use everyware_ui::slider::Slider;
 use everyware_ui::symbol::SymbolIcon;
 use everyware_ui::tile::{Tile, TileKind};
 
-/// The ribbon's slot (tv-patch.js): 1728 wide, cards 438 wide and 24 apart.
+/// The ribbon's slot (tv-patch.js): at x 96, 1728 wide, cards 438 wide and 24 apart.
+pub const RIBBON_X: f32 = 96.0;
 pub const RIBBON_W: f32 = 1728.0;
 pub const CARD_PITCH: f32 = 438.0 + 24.0;
 
@@ -18,6 +19,9 @@ pub struct State {
     pub clock: Clock,
     pub weather: Option<Weather>,
     pub cards: ListView<Tile>,
+    /// Where the ribbon starts on the display (the design's frame, RIBBON_X without one): a
+    /// card's place is this plus its offset in the list, so its slider can read the finger.
+    pub ribbon_x: f32,
     pub nav_home: IconButton,
     pub nav_scenes: IconButton,
     pub nav_wifi: IconButton,
@@ -25,11 +29,12 @@ pub struct State {
 }
 
 impl State {
-    pub fn new() -> Self {
+    pub fn new(sizes: &Sizes) -> Self {
         State {
             clock: Clock::default(),
             weather: None,
             cards: ListView::new(cards(), RIBBON_W, CARD_PITCH).horizontal(),
+            ribbon_x: sizes.frame("#tv/cards").map_or(RIBBON_X, |f| f.x),
             nav_home: IconButton::new(IconButtonKind::Tonal, Icon::House),
             nav_scenes: IconButton::new(IconButtonKind::Tonal, Icon::Sliders),
             nav_wifi: IconButton::new(IconButtonKind::Tonal, Icon::Wifi),
@@ -46,8 +51,9 @@ fn cards() -> Vec<Tile> {
         t
     };
     let slider = |symbol, title: &str, room: &str, level: f32| {
+        // the track is the tile's (Tile::new); only the level is the device's
         let mut t = Tile::new(TileKind::Slider, symbol, title, room).value(format!("{level:.0} %"));
-        t.slider = Slider::new(level, 0.0, 1.0);
+        t.slider.value = level;
         t
     };
     let mut fan = Tile::new(TileKind::Segmented, SymbolIcon::Armchair, "Fan", "Office");
