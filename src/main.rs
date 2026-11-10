@@ -62,8 +62,17 @@ fn main() {
         unsafe { layout_helper.load_font(vec![FontInfo::new(family, *weight)], data) }
             .expect("Failed to load a font into the layout helper");
     }
+    // the design's frames: where the ribbon is on the screen (a card's slider reads the finger
+    // against its track there)
+    let sizes = match everyware_ui::design::Sizes::load(std::path::Path::new(&args.data_path).join(&args.document_id)) {
+        Ok(sizes) => sizes,
+        Err(e) => {
+            log::warn!("tv: no design frames ({e}): the ribbon is taken at its designed place");
+            everyware_ui::design::Sizes::none()
+        }
+    };
     let reducer: DefaultReducer<State, TvAction, UiModel, (), _, _> = DefaultReducer::new(
-        State::new(),
+        State::new(&sizes),
         UiModel::new(display_root_node_map),
         side_effects_tx,
         displays.iter().map(|d| d.id).collect::<Vec<DisplayId>>(),

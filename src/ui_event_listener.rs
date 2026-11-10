@@ -24,10 +24,13 @@ impl UiListener {
 
 impl UiEventListener for UiListener {
     fn handle_event(&mut self, event: UserInputEvent) -> HandleEventStatus {
-        for (node, gesture) in self.input.feed(&event) {
+        // the status is Input's: NotConsumed on a control inside a row, so that harry hands the
+        // touch on to the row (everyware_ui::Input)
+        let (gestures, status) = self.input.feed(&event);
+        for (node, gesture) in gestures {
             let _ = self.actions.send(Actions::CustomAction(TvAction::Gesture(node, gesture)));
         }
-        HandleEventStatus::Consumed
+        status
     }
 
     /// The looper drew a frame: the reducer paces its frames by this (harry FramePacing).
