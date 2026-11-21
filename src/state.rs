@@ -2,7 +2,7 @@
 //! (a horizontal ListView of #tile) and the round buttons.
 
 use crate::clock::Clock;
-use everyware_dashboard_grpc::weather::Weather;
+use everyware_catalog::weather::Weather;
 use everyware_ui::button::{Icon, IconButton, IconButtonKind};
 use everyware_ui::design::Sizes;
 use everyware_ui::list_view::ListView;

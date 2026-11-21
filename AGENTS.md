@@ -15,7 +15,7 @@ repositories, every skill, the rules for every change) is
 | `data/tv.dcf` | the design the app loads; committed |
 | `src/ui_model.rs` | the names of the design the code writes to or taps |
 | `src/state.rs, actions.rs, presenter.rs` | the state, what a gesture or the data changes, the state to the screen |
-| `src/house_link.rs` | the house's data from the dashboard bundle (gRPC, 127.0.0.1:7100; one app at a time holds the port) |
+| `src/house_link.rs` | the house's data from the dashboard bundle (binder, `IScreenLink`, through everyware's `interfaces/screen/link`; one app at a time serves the name) |
 | `src/weather.rs` | what the weather looks like here: the bundle's code to a picture and to words |
 
 ## The rules of an app

@@ -46,19 +46,20 @@ from `design/tv-patch.js` (an agent's or a developer's drawing in code) and the 
 makes the `.dcf` without Figma. Both ways meet in the same `.fig` and the same `.dcf`; the
 `#names` are what keeps them together.
 
-## Build and run on the RB3
+## Build and run
 
 ```bash
-# from the tree's top: build (sdv_media_db845c, out_rb3)
-source device/rb3/sdv_media_db845c/tools/env.sh; m tv_app
+# from the tree's top: build for the device's product, here the Cuttlefish VM
+source device/cf-everyware/sdv_media_everyware_cf/tools/env.sh; m tv_app
 
-# the panel's dashboard bundle on 127.0.0.1:7100 serves one app at a time: stop the other one first
-adb shell mkdir -p /data/local/tmp/tv
-adb push out_rb3/target/product/sdv_media_db845c/system/bin/tv_app /data/local/tmp/tv/
-adb push packages/services/display_safety/utils/tv-app/data/tv.dcf /data/local/tmp/tv/
-adb shell "cd /data/local/tmp/tv; LD_LIBRARY_PATH=/system/lib64:/vendor/lib64:/apex/com.everyware.smarthome/lib64 \
-    ./tv_app --data-path /data/local/tmp/tv --touch-size 1920x1080"
+# push the binary and the design to adb's device, stop the panel, run the app
+packages/services/display_safety/utils/tv-app/scripts/run.sh
+packages/services/display_safety/utils/tv-app/scripts/run.sh log     # its log lines
+packages/services/display_safety/utils/tv-app/scripts/run.sh stop    # the panel is back
 ```
+
+The dashboard bundle talks to one screen at a time (the binder service IScreenLink): the script
+stops the panel, and another app started this way has to be stopped with its own script first.
 
 The fonts are compiled in (`data/*.otf`); the time comes from the board's clock, the weather
 from the dashboard bundle.
