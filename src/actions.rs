@@ -5,7 +5,7 @@
 
 use crate::clock::Clock;
 use crate::state::State;
-use everyware_dashboard_grpc::weather::Weather;
+use everyware_catalog::weather::Weather;
 use everyware_ui::button::ButtonEvent;
 use everyware_ui::list_view::ListEvent;
 use everyware_ui::tile::{Tile, TileEvent};

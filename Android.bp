@@ -1,7 +1,7 @@
 // tv_app: a home screen in the style of a smart TV launcher on harry, written
 // (vendor/sdv-everyware/ui-lib) only: the screen's design is design/tv-patch.js
 // (+ ui-lib's dark-theme-patch.js), its .dcf made by fig-to-dcf.sh; the weather comes from
-// the dashboard bundle on 127.0.0.1:7100, as for smarthome_app (one of the two runs at a time).
+// the dashboard bundle over binder (IScreenLink), as for smarthome_app (one of the two runs at a time).
 
 package {
     default_applicable_licenses: ["Android-Apache-2.0"],
@@ -27,10 +27,11 @@ rust_binary {
         "liblibc",
         "liblog_rust",
         "libeveryware_ui",
-        "libgrpcio",
-        "libfutures",
         "libprotobuf",
-        "libeveryware_dashboard_grpc",
+        // the house's data from the dashboard bundle over binder (house_link.rs): the
+        // catalog's messages and the shared link
+        "libeveryware_catalog",
+        "libeveryware_screen_link",
     ],
     proc_macros: [
         "libclap_derive",
